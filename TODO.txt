@@ -1,0 +1,3 @@
+one modal for Page 2 user input comments
+in database, it needs to have which questions will need to be queried so page_num,
+user_comments table with the column name of user_input that is being commented on, the comment its self, and the user_id
