@@ -5,9 +5,9 @@ header("Access-Control-Allow-Methods: POST"); // Allow POST requests
 header("Access-Control-Allow-Headers: Content-Type, Authorization"); // Allow Content-Type and Authorization headers
 header('Content-Type: application/json');
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 // Get the JSON payload from the request
 $json = file_get_contents('php://input');
@@ -25,7 +25,7 @@ $stage = $data['stage'];
 
 require_once("../connect/db.php");
 
-if ($is_there_data == 1) {
+if ($is_there_data == "true") {
 
     $sql = "UPDATE `user_input_comments` SET `user_comment` = ? WHERE id = ?;";
 

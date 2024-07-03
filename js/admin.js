@@ -81,11 +81,11 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             else if (formType == 'user-input-table') {
                 const referenceForm = document.getElementById('user-input-table-form');
-                referenceForm.setAttribute('action', `includes/modal_form/user-input-table.inc.php?section_id=${sectionId}&page_num=${page_num}`);
+                referenceForm.setAttribute('action', `includes/modal_form/user-input-table.inc.php?section_id=${sectionId}&page_num=${page_num}&part=1`);
             }
             else if (formType == 'user-input-table-2') {
-                const referenceForm = document.getElementById('user-input-table-form-2');
-                referenceForm.setAttribute('action', `includes/modal_form/user-input-table.inc.php?section_id=${sectionId}&page_num=${page_num}`);
+                const referenceForm = document.getElementById('user-input-table-form');
+                referenceForm.setAttribute('action', `includes/modal_form/user-input-table.inc.php?section_id=${sectionId}&page_num=${page_num}&part=2`);
             }
         });
     });

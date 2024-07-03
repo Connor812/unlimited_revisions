@@ -631,127 +631,80 @@ function user_input_table_section($user_input_row, $mysqli, $add_button, $user_i
     ?>
     <section class="section_container" id="<?php echo $order_num ?>">
 
-        <?php
-        $result = get_user_input_table($section_id, $mysqli);
-        // get all the questions asked in the pages that were provided
-        $page_nums = $result['page_nums'];
-        $part = $result['part'];
+        <table class="user-input-table">
+            <thead>
+                <tr>
+                    <th>Your Answer</th>
+                    <th>Please Elaborate On Your Answer</th>
+                </tr>
+            </thead>
 
-        if ($page_num === false) {
-            return "Error getting page numbers";
-        }
+            <tbody>
+                <?php
+                generate_user_tables($section_name, $section_id, $mysqli, $user_id);
 
-        $user_input_rows = get_section_ids($page_nums, $mysqli);
+                ?>
+            </tbody>
 
-        if ($user_input_rows === false) {
-            return "Error getting section ids";
-        }
-
-        if ($part === 1) {
-        ?>
-            <table class="user-input-table">
-                <thead>
-                    <tr>
-                        <th>Your Answer</th>
-                        <th>Please Elaborate On Your Answer</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <?php
-
-                    foreach ($user_input_rows as $row) {
-                        generate_table_rows($row, $mysqli, $user_id);
-                    }
-
-                    ?>
-                </tbody>
-
-            </table>
+        </table>
     </section>
 
 <?php
-        } else {
-?>
-    <table style="width: 100%;">
-        <thead>
-            <tr>
-                <th>Your Answer</th>
-                <th>Please Elaborate On Your Answer</th>
-                <th>Final Overview</th>
-            </tr>
-        </thead>
+    echo $add_button ? add_button($order_num, $page_num, $section_type) : '';
+}
+function add_button($id, $page_num, $section_type)
+{
 
-        <tbody>
-            <?php
-
-            foreach ($user_input_rows as $row) {
-                generate_table_rows_2($row, $mysqli, $user_id);
-            }
-
-            ?>
-        </tbody>
-
-    </table>
-    </section>
-<?php
-        }
-        echo $add_button ? add_button($order_num, $page_num, $section_type) : '';
+    $page_name = "";
+    // This is for the action buttons. We need the section type, so the link will take them to the correct section to either edit add or delete
+    if ($section_type == "heading") {
+        $page_name = "heading";
+    } elseif (($section_type == "subheading")) {
+        $page_name = "subheading";
+    } elseif (($section_type == "quote")) {
+        $page_name = "quote";
+    } elseif (($section_type == "byline")) {
+        $page_name = "byline";
+    } elseif (($section_type == "video")) {
+        $page_name = "video";
+    } elseif (($section_type == "image")) {
+        $page_name = "image";
+    } elseif (($section_type == "comment")) {
+        $page_name = "comment";
+    } elseif (($section_type == "text")) {
+        $page_name = "text";
+    } elseif (($section_type == "click_list")) {
+        $page_name = "click_list";
+    } elseif (($section_type == "story_box")) {
+        $page_name = "story_box";
+    } elseif (($section_type == "bullet")) {
+        $page_name = "bullet";
+    } elseif (($section_type == "reference")) {
+        $page_name = "reference";
     }
 
-    function add_button($id, $page_num, $section_type)
-    {
-
-        $page_name = "";
-        // This is for the action buttons. We need the section type, so the link will take them to the correct section to either edit add or delete
-        if ($section_type == "heading") {
-            $page_name = "heading";
-        } elseif (($section_type == "subheading")) {
-            $page_name = "subheading";
-        } elseif (($section_type == "quote")) {
-            $page_name = "quote";
-        } elseif (($section_type == "byline")) {
-            $page_name = "byline";
-        } elseif (($section_type == "video")) {
-            $page_name = "video";
-        } elseif (($section_type == "image")) {
-            $page_name = "image";
-        } elseif (($section_type == "comment")) {
-            $page_name = "comment";
-        } elseif (($section_type == "text")) {
-            $page_name = "text";
-        } elseif (($section_type == "click_list")) {
-            $page_name = "click_list";
-        } elseif (($section_type == "story_box")) {
-            $page_name = "story_box";
-        } elseif (($section_type == "bullet")) {
-            $page_name = "bullet";
-        } elseif (($section_type == "reference")) {
-            $page_name = "reference";
-        }
-
 ?>
-<div id="add<?php echo $id; ?>" class="add_section_line hide"></div>
-<div class="action-btn-container">
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            <svg width="20" height="20" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
-                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
-            </svg>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li>
-                <button type="button" class="add-section-btn dropdown-item" data-mdb-toggle="modal" data-mdb-target="#button-modal" section_id="<?php echo $id; ?>">Add</button>
-            </li>
-            <li>
-                <a href="<?php echo BASE_URL ?>/admin_edit/edit_<?php echo $page_name ?>.php?page_num=<?php echo $page_num ?>&order_num=<?php echo $id ?>" class="edit-section-btn dropdown-item" section_id="<?php echo $id; ?>">Edit</a>
-            </li>
-            <li>
-                <button type="button" class="delete-section-btn dropdown-item" data-mdb-toggle="modal" data-mdb-target="#delete-section-modal" section_id="<?php echo $id; ?>">Delete</button>
-            </li>
-        </ul>
+    <div id="add<?php echo $id; ?>" class="add_section_line hide"></div>
+    <div class="action-btn-container">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <svg width="20" height="20" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
+                </svg>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                    <button type="button" class="add-section-btn dropdown-item" data-mdb-toggle="modal" data-mdb-target="#button-modal" section_id="<?php echo $id; ?>">Add</button>
+                </li>
+                <li>
+                    <a href="<?php echo BASE_URL ?>/admin_edit/edit_<?php echo $page_name ?>.php?page_num=<?php echo $page_num ?>&order_num=<?php echo $id ?>" class="edit-section-btn dropdown-item" section_id="<?php echo $id; ?>">Edit</a>
+                </li>
+                <li>
+                    <button type="button" class="delete-section-btn dropdown-item" data-mdb-toggle="modal" data-mdb-target="#delete-section-modal" section_id="<?php echo $id; ?>">Delete</button>
+                </li>
+            </ul>
+        </div>
+
     </div>
-
-</div>
 <?php
-    }
+}

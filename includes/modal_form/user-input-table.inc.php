@@ -7,6 +7,7 @@ require_once 'update_journal_page.php';
 $section_id = $_GET['section_id'];
 $page_num = $_GET['page_num'];
 $questions = $_POST['questions'];
+$part = $_GET['part'];
 
 if (empty($page_num)) {
     header("Location: " . BASE_URL . "admin_pages.php?error=no_page_num");

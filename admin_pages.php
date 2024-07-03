@@ -787,6 +787,9 @@ require_once 'includes/display-sections.inc.php';
                     <button type="button" class="btn btn-primary modal_button" form_type="user-input-table" data-mdb-toggle="modal" data-mdb-target="#user-input-table-modal">
                         User Input Table
                     </button>
+                    <button type="button" class="btn btn-primary modal_button" form_type="user-input-table-2" data-mdb-toggle="modal" data-mdb-target="#user-input-table-modal">
+                        User Input Table 2
+                    </button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
